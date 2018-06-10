@@ -1,0 +1,43 @@
+
+html
+head
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+title Blog spot
+body
+<div class="container">
+
+<form method="POST"  action="http://localhost:3003/api/signup">
+<div class="col-lg-12">
+<label>Email</label>
+<input class="form-control" name="email">
+</div>
+<div class="col-lg-12">
+<label>Name</label>
+<input type="text" class="form-control" name="name">
+</div>
+<div class="col-lg-12">
+<label>Password</label>
+<input type="password" class="form-control" name="password">
+</div>
+<div class="col-lg-12">
+<label>Date of birth</label>
+<input type="Date" class="form-control" name="dob">
+</div>
+<div class="col-lg-12">
+<label>Image</label>
+<input type="file" class="form-control" name="pic">
+</div>
+<div class="col-lg-12">
+<label  style='padding-top:10px;' >Gender</label>
+<input type='radio' name='gender' value='male'> Male
+<input type='radio' name='gender' value='female'> Female
+
+</div>
+<div class="col-lg-12" style="margin-top:10px;">
+<p>
+<button class="btn btn-primary" type="submit">Register</button>
+</p>
+
+</div>
+</form>
+</div>
