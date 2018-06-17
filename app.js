@@ -33,12 +33,7 @@ app.use(express.static(__dirname + "/views"));
 app.set('view engine', "pug");
 //routing start
 
-route.get('/register', function (req, res) {
-    res.render('register')
-})
-
 route.post('/signup', function (req, res) {
-    console.log('The data is', req.body);
     //hash password start
     bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(req.body.password, salt, function (err, hash) {
@@ -67,10 +62,10 @@ route.post('/checklogin', function (req, res) {
         console.log('The login record is ', req.body.password, user)
         bcrypt.compare(req.body.password, user.password, function (err, loginres) {
             if (loginres) {
-                res.render('home')
+                res.json({status : 1})
             }
             else {
-                res.render('index')
+                res.json({status : 0})
             }
         })
     });
