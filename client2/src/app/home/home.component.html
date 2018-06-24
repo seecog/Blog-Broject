@@ -1,5 +1,30 @@
+<div class="row">
+<div class="col-lg-3">
 
-    <app-nav-bar></app-nav-bar>
-    <div class="container" style="margin-top:50px;">
-<router-outlet></router-outlet>
-    </div><!-- /.container -->
+    <div class="list-group">
+        <a *ngFor="let cat of categories" routerLink="/" [queryParams]="{category : cat._id}" class="list-group-item" >
+{{cat.label}}
+        </a>
+    </div>
+
+</div>
+ <div class="col">
+        <div class="row">
+                <ng-container *ngFor="let x of tempProducts">
+            
+                        <div class="card" style="width: 15rem;">
+                                <img width=200 height=200 class="card-img-top" [src]="x.url" alt="Card image cap">
+                                <div class="card-body">
+                                  <h5 class="card-title">{{x.title}}</h5>
+                                  <p class="card-text">Rs. {{x.cost}}</p>
+                                  <button href="#" class="btn btn-primary">Add To Cart</button>
+                                </div>
+                              </div>
+            
+                </ng-container>
+            </div>
+ </div>   
+</div>
+
+
+

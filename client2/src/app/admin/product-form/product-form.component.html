@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-lg-6">
+    <form [formGroup]="productFrm">
+      <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" formControlName="title">
+        <div *ngIf="productFrm.get('title').errors && productFrm.get('title').touched">
+          <span style="color:red;" *ngIf="productFrm.get('title').errors['required']">Product title required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Cost</label>
+        <input class="form-control" formControlName="cost">
+        <div *ngIf="productFrm.get('cost').errors && productFrm.get('cost').touched">
+          <span style="color:red;" *ngIf="productFrm.get('cost').errors['required']">Product cost required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" formControlName="category">
+          <option *ngFor="let cat of categories" [value]="cat._id">
+            {{cat.label}}
+          </option>
+        </select>
+        <div *ngIf="productFrm.get('category').errors && productFrm.get('category').touched">
+          <span style="color:red;" *ngIf="productFrm.get('category').errors['required']">Product category required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Url</label>
+        <input class="form-control" formControlName="url">
+        <div *ngIf="productFrm.get('url').errors && productFrm.get('url').touched">
+          <span style="color:red;" *ngIf="productFrm.get('url').errors['required']">Product url required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <button *ngIf="btn_stt" class="btn btn-success" [disabled]="!productFrm.valid" (click)="saveProduct()">Save</button>
+        <button *ngIf="!btn_stt" class="btn btn-success" [disabled]="!productFrm.valid" (click)="updateProduct()">Update</button>
+     
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <img class="card-img-top" [src]="productFrm.get('url').value" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{productFrm.get('title').value}}</h5>
+        <p class="card-text">Rs. {{productFrm.get('cost').value}}</p>
+        <span>{{productFrm.get('category').value}}</span>
+      </div>
+    </div>
+  </div>
+</div>

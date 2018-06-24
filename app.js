@@ -13,6 +13,7 @@ const saltRounds = 10;
 var mongoose = require("mongoose")
 mongoose.connect("mongodb://localhost:27017/blog");
 var User = require("./models/user.model")
+var Product = require('./models/product.model');
 //mongoose end
 
 //create route object start
@@ -32,6 +33,105 @@ app.use('/api', route);
 app.use(express.static(__dirname + "/views"));
 app.set('view engine', "pug");
 //routing start
+
+//cors start
+var cors = require('cors');
+var originsWhitelist = [
+'http://localhost:4200', //this is front end url
+];
+var corsOptions = {
+origin: function(origin, callback){
+var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+callback(null, isWhitelisted);
+},
+credentials:true
+}
+app.use(cors(corsOptions));
+
+//cors end
+
+
+let Categorie = require('./models/category.model.js');
+route.get('/categories',function(req,res){
+    console.log('Inside categories');
+    Categorie.find({},function(err,categories){
+        res.json(categories);
+    })
+})
+
+route.post('/products',function(req,res){
+	
+	Product.create(req.body,function(err,product){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json({message : 'Prodcut saved'})
+		
+	})
+	
+});
+
+route.put('/products/:id',function(req,res){
+	
+	Product.update({_id : req.params.id},req.body,function(err,product){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json({message : 'Prodcut updated'})
+		
+	})
+	
+});
+
+route.get('/products/:id',function(req,res){
+	
+	Product.findOne({_id : req.params.id},function(err,product){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json(product)
+		
+	})
+	
+});
+
+route.get('/products',function(req,res){
+	
+	Product.find({},function(err,products){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json(products)
+		
+	})
+	
+});
+
+
+route.delete('/products/:id',function(req,res){
+	
+	Product.remove({_id : req.params.id},function(err,product){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json({message : 'Product deleted'})
+		
+	})
+	
+});
+
+route.put('/products/:id',function(req,res){
+	
+	Product.update({_id : req.params.id},req.body,function(err,product){
+		if(err){
+			console.log('The error is ',err)
+		}
+		res.json({message : 'Product deleted'})
+		
+	})
+	
+});
+
 
 route.post('/signup', function (req, res) {
     //hash password start
