@@ -15,6 +15,7 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FileUploadModule } from 'ng2-file-upload';
 //firebase end
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
+    FileUploadModule,
     ReactiveFormsModule,
     HttpModule,
     AngularFireModule.initializeApp(environment.firebase, 'sam1'),
@@ -36,7 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
-      {path : 'admin/products/:id',component : ProductFormComponent},
+      { path: 'admin/products/:id', component: ProductFormComponent },
       { path: 'admin/products/new', component: ProductFormComponent },
       { path: 'admin/products', component: AdminProductsComponent }
     ])

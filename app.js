@@ -5,7 +5,7 @@ var port = 3003;
 //bcrypt start
 var bcrypt = require("bcrypt");
 const saltRounds = 10;
-
+var fs = require('fs');
 
 //bcrypt end
 
@@ -34,6 +34,16 @@ app.use(express.static(__dirname + "/views"));
 app.set('view engine', "pug");
 //routing start
 
+//multer start
+var multer = require('multer');
+// set the directory for the uploads to the uploaded to
+var DIR = './uploads/';
+//define the type of upload multer would be doing and pass in its destination, in our case, its a single file with the name photo
+var upload = multer({dest: DIR}).single('photo');
+/* GET home page. */
+
+//multer end
+
 //cors start
 var cors = require('cors');
 var originsWhitelist = [
@@ -50,6 +60,13 @@ app.use(cors(corsOptions));
 
 //cors end
 
+app.use(function(req, res, next) {
+	//set headers to allow cross origin request.
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		next();
+	});
 
 let Categorie = require('./models/category.model.js');
 route.get('/categories',function(req,res){
@@ -106,6 +123,29 @@ route.get('/products',function(req,res){
 	})
 	
 });
+
+route.get('/readpic/:id',function(req,res){
+	fs.readFile(__dirname + "/uploads/"+req.params.id, function(err, data) {
+		if (err) throw err;
+		console.log('reading file...', data.toString('base64'));
+		res.send(data);
+	});
+})
+
+route.post('/uploadpic',function(req,res){
+	console.log("Inside the upload")
+	var path = '';
+     upload(req, res, function (err) {
+        if (err) {
+          // An error occurred when uploading
+          console.log(err);
+          return res.status(422).send("an Error occured")
+        }  
+       // No error occured.
+        path = req.file.path;
+        return res.send(path); 
+  });     
+})
 
 
 route.delete('/products/:id',function(req,res){
